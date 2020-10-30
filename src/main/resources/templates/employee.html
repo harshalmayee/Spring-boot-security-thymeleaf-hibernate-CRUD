@@ -19,6 +19,7 @@
                <th>Employee Name</th>
                <th>Employee Address</th>
                <th>Employee Email</th>
+               <th>Actions</th>
            </tr>
         </thead>
         <tbody>
@@ -26,6 +27,7 @@
               <td th:text="${employee.empName}"></td>
               <td th:text="${employee.empAddress}"></td>
               <td th:text="${employee.empEmailId}"></td>
+              <td><a th:href="@{/employee/employeeUpdate/{id}(id=${employee.empId})}" class="btn btn-primary" >Update</a></td>
           </tr>
         </tbody>
     </table>

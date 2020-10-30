@@ -5,10 +5,7 @@ import com.javaguides.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/employee")
@@ -31,7 +28,7 @@ public class EmployeeController {
         // Craete model attribute to bind form data
         Employee employee=new Employee();
         model.addAttribute("employee",employee);
-        return "saveEmployee";
+        return "saveEmployee.html";
     }
 
     @PostMapping("/saveEmployee")
@@ -40,4 +37,15 @@ public class EmployeeController {
         employeeService.saveEmployee(employee);
         return "redirect:/employee/getEmpList";
     }
+
+    @GetMapping("/employeeUpdate/{empId}")
+    public String updateEmployee(@PathVariable (value = "empId") long empId,Model model){
+         // get employee to be updated from service
+        Employee employee=employeeService.getEmployeeById(empId);
+        // set employee as a model attribute to pre-populate the form
+        model.addAttribute("employee",employee);
+        return "updateEmployee.html";
+    }
+
+
 }
