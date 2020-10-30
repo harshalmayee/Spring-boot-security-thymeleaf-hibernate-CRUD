@@ -27,7 +27,10 @@
               <td th:text="${employee.empName}"></td>
               <td th:text="${employee.empAddress}"></td>
               <td th:text="${employee.empEmailId}"></td>
-              <td><a th:href="@{/employee/employeeUpdate/{id}(id=${employee.empId})}" class="btn btn-primary" >Update</a></td>
+              <td style="width:1px; white-space:nowrap;">
+                  <a th:href="@{/employee/employeeUpdate/{id}(id=${employee.empId})}" class="btn btn-primary" >Update</a>
+                  <a th:href="@{/employee/employeeDelete/{id}(id=${employee.empId})}" class="btn btn-danger" >Delete</a>
+              </td>
           </tr>
         </tbody>
     </table>
