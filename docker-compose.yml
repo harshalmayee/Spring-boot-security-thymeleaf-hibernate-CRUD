@@ -1,0 +1,44 @@
+# Docker Compose file Reference (https://docs.docker.com/compose/compose-file/)
+version: '3'
+
+#Define services
+services:
+
+  #PostgreSQL Database for the application
+  my_postgres:
+    image: postgres:latest
+    container_name: my_postgres
+    #Volume mounted for database for the storage
+    volumes:
+      - postgre-data:/var/lib/postgresql/data
+    ports:
+    - 5433:5432 # Forward the exposed port 5432 on the container to port 5432 on the host machine
+
+    #Environment variable for DB name, user and password
+    environment:
+      - POSTGRES_DB=myDatabase
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=aaroh#123
+
+  #Back-end Spring Boot Application
+  spring-boot-security-thymeleaf-hibernate:
+    image: harshalmayeedocker/spring-boot-security-thymeleaf-hibernate
+    container_name: spring-boot-security-thymeleaf-hibernate
+    ports:
+      - 9090:8080 # Forward the exposed port 8080 on the container to port 8080 on the host machine
+    build:
+      context: ./
+      dockerfile: Dockerfile
+
+    #Environment variables for Spring Boot Application.
+    environment:
+      - DB_SERVER=my_postgres
+      - POSTGRES_DB=myDatabase
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=aaroh#123
+    depends_on:
+      - my_postgres
+
+#Volumes for DB data
+volumes:
+  postgre-data:
